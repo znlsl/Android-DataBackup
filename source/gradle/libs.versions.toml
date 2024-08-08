@@ -1,13 +1,13 @@
 [versions]
 # config
 compileSdk = "34"
-minSdk = "26"
+minSdk = "24"
 targetSdk = "34"
 # __(API)_(feature)___(version)_(abi)
 # TODO: Feature bit is no longer useful, drop when next api releases
-versionCode = "3411080"
-versionCodeAlpha = "14"
-versionName = "2.0.2"
+versionCode = "3411090"
+versionCodeAlpha = "15"
+versionName = "2.0.3"
 compose-compiler = "1.5.12" # https://androidx.dev/storage/compose-compiler/repository
 
 # libraries
@@ -37,7 +37,7 @@ palette = "1.0.0"
 google-services = "4.3.15" # Pinned: https://github.com/firebase/firebase-android-sdk/issues/4693#issuecomment-1765778239
 firebase-crashlytics-gradle = "2.9.9" # Workaround: https://github.com/xamarin/GooglePlayServicesComponents/issues/642#issuecomment-1221520982
 firebase-bom = "32.7.0"
-pickyou = "2.1.7"
+pickyou = "2.1.8"
 datastore-preferences = "1.1.1"
 serialization-protobuf = "1.6.0"
 apache-commons = "3.10.0"

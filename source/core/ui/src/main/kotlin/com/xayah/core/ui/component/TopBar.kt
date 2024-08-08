@@ -21,13 +21,12 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.xayah.core.ui.material3.toColor
-import com.xayah.core.ui.material3.tokens.ColorSchemeKeyTokens
-import com.xayah.core.ui.model.StringResourceToken
 import com.xayah.core.ui.model.TopBarState
+import com.xayah.core.ui.theme.ThemedColorSchemeKeyTokens
+import com.xayah.core.ui.theme.value
 import com.xayah.core.ui.token.AnimationTokens
 import com.xayah.core.ui.util.LocalNavController
-import com.xayah.core.ui.util.value
+import com.xayah.core.util.maybePopBackStack
 
 @ExperimentalMaterial3Api
 @Composable
@@ -39,23 +38,13 @@ fun PrimaryTopBar(scrollBehavior: TopAppBarScrollBehavior?, title: String, actio
     )
 }
 
-@ExperimentalMaterial3Api
-@Composable
-fun PrimaryTopBar(scrollBehavior: TopAppBarScrollBehavior?, title: StringResourceToken, actions: @Composable RowScope.() -> Unit = {}) {
-    TopAppBar(
-        title = { Text(text = title.value) },
-        scrollBehavior = scrollBehavior,
-        actions = actions,
-    )
-}
-
 @ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @Composable
 fun SecondaryTopBar(
     scrollBehavior: TopAppBarScrollBehavior?,
-    title: StringResourceToken,
-    subtitle: StringResourceToken? = null,
+    title: String,
+    subtitle: String? = null,
     actions: @Composable RowScope.() -> Unit = {},
     onBackClick: (() -> Unit)? = null
 ) {
@@ -63,9 +52,9 @@ fun SecondaryTopBar(
     TopAppBar(
         title = {
             Column {
-                Text(modifier = Modifier.basicMarquee(), text = title.value, maxLines = 1)
+                Text(modifier = Modifier.basicMarquee(), text = title, maxLines = 1)
                 AnimatedVisibility(visible = subtitle != null) {
-                    LabelLargeText(text = subtitle?.value ?: "", color = ColorSchemeKeyTokens.Outline.toColor())
+                    LabelLargeText(text = subtitle ?: "", color = ThemedColorSchemeKeyTokens.Outline.value)
                 }
             }
         },
@@ -73,7 +62,7 @@ fun SecondaryTopBar(
         navigationIcon = {
             ArrowBackButton {
                 if (onBackClick != null) onBackClick.invoke()
-                else navController.popBackStack()
+                else navController.maybePopBackStack()
             }
         },
         actions = actions,
@@ -84,18 +73,18 @@ fun SecondaryTopBar(
 @Composable
 fun SecondaryMediumTopBar(
     scrollBehavior: TopAppBarScrollBehavior?,
-    title: StringResourceToken,
+    title: String,
     actions: @Composable RowScope.() -> Unit = {},
     onBackClick: (() -> Unit)? = null
 ) {
     val navController = LocalNavController.current!!
     MediumTopAppBar(
-        title = { Text(text = title.value) },
+        title = { Text(text = title) },
         scrollBehavior = scrollBehavior,
         navigationIcon = {
             ArrowBackButton {
                 if (onBackClick != null) onBackClick.invoke()
-                else navController.popBackStack()
+                else navController.maybePopBackStack()
             }
         },
         actions = actions,
@@ -106,18 +95,18 @@ fun SecondaryMediumTopBar(
 @Composable
 fun SecondaryLargeTopBar(
     scrollBehavior: TopAppBarScrollBehavior?,
-    title: StringResourceToken,
+    title: String,
     actions: @Composable RowScope.() -> Unit = {},
     onBackClick: (() -> Unit)? = null
 ) {
     val navController = LocalNavController.current!!
     LargeTopAppBar(
-        title = { Text(text = title.value) },
+        title = { Text(text = title) },
         scrollBehavior = scrollBehavior,
         navigationIcon = {
             ArrowBackButton {
                 if (onBackClick != null) onBackClick.invoke()
-                else navController.popBackStack()
+                else navController.maybePopBackStack()
             }
         },
         actions = actions,

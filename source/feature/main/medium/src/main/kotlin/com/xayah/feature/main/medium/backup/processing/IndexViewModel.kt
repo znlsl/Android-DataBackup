@@ -27,16 +27,15 @@ import com.xayah.core.ui.model.DialogRadioItem
 import com.xayah.core.ui.model.ProcessingCardItem
 import com.xayah.core.ui.model.ProcessingMediaCardItem
 import com.xayah.core.ui.model.ReportFileItemInfo
-import com.xayah.core.ui.model.StringResourceToken
 import com.xayah.core.ui.route.MainRoutes
 import com.xayah.core.ui.util.addInfo
-import com.xayah.core.ui.util.fromString
 import com.xayah.core.ui.util.toProcessingCardItem
 import com.xayah.core.ui.viewmodel.BaseViewModel
 import com.xayah.core.ui.viewmodel.IndexUiEffect
 import com.xayah.core.ui.viewmodel.UiIntent
 import com.xayah.core.ui.viewmodel.UiState
 import com.xayah.core.util.DateUtil
+import com.xayah.core.util.navigateSingle
 import com.xayah.feature.main.medium.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -131,7 +130,7 @@ class IndexViewModel @Inject constructor(
                         emitEffect(IndexUiEffect.DismissSnackbar)
                         withMainContext {
                             intent.navController.popBackStack()
-                            intent.navController.navigate(MainRoutes.MediumBackupProcessing.route)
+                            intent.navController.navigateSingle(MainRoutes.MediumBackupProcessing.route)
                         }
                     }.onFailure {
                         emitEffect(IndexUiEffect.DismissSnackbar)
@@ -142,7 +141,7 @@ class IndexViewModel @Inject constructor(
                 } else {
                     withMainContext {
                         intent.navController.popBackStack()
-                        intent.navController.navigate(MainRoutes.MediumBackupProcessing.route)
+                        intent.navController.navigateSingle(MainRoutes.MediumBackupProcessing.route)
                     }
                 }
             }
@@ -222,7 +221,7 @@ class IndexViewModel @Inject constructor(
                 medium.map {
                     items.add(
                         ProcessingMediaCardItem(
-                            title = StringResourceToken.fromString(it.mediaEntity.name),
+                            title = it.mediaEntity.name,
                             name = it.mediaEntity.name,
                             items = listOf(it.mediaInfo.toProcessingCardItem)
                         )
@@ -275,8 +274,8 @@ class IndexViewModel @Inject constructor(
         entities.map {
             DialogRadioItem(
                 enum = Any(),
-                title = StringResourceToken.fromString(it.name),
-                desc = StringResourceToken.fromString(it.user),
+                title = it.name,
+                desc = it.user,
             )
         }
 

@@ -16,15 +16,14 @@ import com.xayah.core.model.database.MediaEntity
 import com.xayah.core.model.database.PackageEntity
 import com.xayah.core.model.util.formatSize
 import com.xayah.core.ui.model.DialogRadioItem
-import com.xayah.core.ui.model.StringResourceToken
 import com.xayah.core.ui.route.MainRoutes
-import com.xayah.core.ui.util.fromString
 import com.xayah.core.ui.viewmodel.BaseViewModel
 import com.xayah.core.ui.viewmodel.IndexUiEffect
 import com.xayah.core.ui.viewmodel.UiIntent
 import com.xayah.core.ui.viewmodel.UiState
 import com.xayah.core.util.encodeURL
 import com.xayah.core.util.localBackupSaveDir
+import com.xayah.core.util.navigateSingle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -121,12 +120,12 @@ class IndexViewModel @Inject constructor(
                 withMainContext {
                     when (state.storageType) {
                         StorageMode.Local -> {
-                            intent.navController.navigate(MainRoutes.PackagesRestoreList.getRoute(" ".encodeURL(), context.localBackupSaveDir().encodeURL()))
+                            intent.navController.navigateSingle(MainRoutes.PackagesRestoreList.getRoute(" ".encodeURL(), context.localBackupSaveDir().encodeURL()))
                         }
 
                         StorageMode.Cloud -> {
                             if (state.cloudEntity != null) {
-                                intent.navController.navigate(
+                                intent.navController.navigateSingle(
                                     MainRoutes.PackagesRestoreList.getRoute(
                                         state.cloudEntity.name.encodeURL(),
                                         state.cloudEntity.remote.encodeURL()
@@ -142,12 +141,12 @@ class IndexViewModel @Inject constructor(
                 withMainContext {
                     when (state.storageType) {
                         StorageMode.Local -> {
-                            intent.navController.navigate(MainRoutes.MediumRestoreList.getRoute(" ".encodeURL(), context.localBackupSaveDir().encodeURL()))
+                            intent.navController.navigateSingle(MainRoutes.MediumRestoreList.getRoute(" ".encodeURL(), context.localBackupSaveDir().encodeURL()))
                         }
 
                         StorageMode.Cloud -> {
                             if (state.cloudEntity != null) {
-                                intent.navController.navigate(
+                                intent.navController.navigateSingle(
                                     MainRoutes.MediumRestoreList.getRoute(
                                         state.cloudEntity.name.encodeURL(),
                                         state.cloudEntity.remote.encodeURL()
@@ -163,12 +162,12 @@ class IndexViewModel @Inject constructor(
                 withMainContext {
                     when (state.storageType) {
                         StorageMode.Local -> {
-                            intent.navController.navigate(MainRoutes.Reload.getRoute(" ".encodeURL(), context.localBackupSaveDir().encodeURL()))
+                            intent.navController.navigateSingle(MainRoutes.Reload.getRoute(" ".encodeURL(), context.localBackupSaveDir().encodeURL()))
                         }
 
                         StorageMode.Cloud -> {
                             if (state.cloudEntity != null) {
-                                intent.navController.navigate(
+                                intent.navController.navigateSingle(
                                     MainRoutes.Reload.getRoute(
                                         state.cloudEntity.name.encodeURL(),
                                         state.cloudEntity.remote.encodeURL()
@@ -189,8 +188,8 @@ class IndexViewModel @Inject constructor(
         entities.map {
             DialogRadioItem(
                 enum = Any(),
-                title = StringResourceToken.fromString(it.name),
-                desc = StringResourceToken.fromString(it.user),
+                title = it.name,
+                desc = it.user,
             )
         }
 
